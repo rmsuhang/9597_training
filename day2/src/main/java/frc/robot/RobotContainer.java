@@ -30,11 +30,11 @@ public class RobotContainer {
 
 
   private void configureBindings() {
-    //电机正转
-    m_driverJoystick.leftBumper().onTrue(motor.Motor_Move_Positive());
+    //电机到位50
+    m_driverJoystick.leftBumper().onTrue(motor.Motor_Move_Position1());
 
-    //电机反转
-    m_driverJoystick.rightBumper().onTrue(motor.Motor_Move_Negetive());
+    //电机到位100
+    m_driverJoystick.rightBumper().onTrue(motor.Motor_Move_Position2());
     
   }
 
