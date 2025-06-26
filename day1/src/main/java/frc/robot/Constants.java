@@ -20,7 +20,12 @@ public final class Constants {
     
     public static final int Motorid = 1;
 
+    public static final double MotorPosition1 = 50.0;
+    public static final double MotorPosition2 = 0.0;
+    public static final double Accepted_Error = 0.2;
+
   }
+
   public static class OperatorConstants {
     
     public static final int kDriverControllerPort = 0;

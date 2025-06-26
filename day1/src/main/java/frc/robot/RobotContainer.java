@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.CANdlePrintCommands;
 import frc.robot.subsystems.CANdleSystem;
@@ -44,9 +43,13 @@ public class RobotContainer {
         m_driverJoystick.b().onTrue(new CANdlePrintCommands.PrintCurrent(m_candleSubsystem));
 
         //together motor and candle
-        m_driverJoystick.leftBumper().whileTrue(new ParallelCommandGroup(testmotor.motor_Move2position(),
-        m_candleSubsystem.setFireWithMotor()));
+        //m_driverJoystick.leftBumper().whileTrue(new ParallelCommandGroup(testmotor.motor_Move2position(),
+        //m_candleSubsystem.setFireWithMotor()));
+        m_driverJoystick.leftBumper().onTrue(testmotor.motor_Move2position(Constants.Motor.MotorPosition1)
+                                      .andThen(m_candleSubsystem::setFire,m_candleSubsystem));
 
+        m_driverJoystick.rightBumper().onTrue(testmotor.motor_Move2position(Constants.Motor.MotorPosition2)
+                                      .andThen(m_candleSubsystem::setColorFlow,m_candleSubsystem));
     }
 
   }

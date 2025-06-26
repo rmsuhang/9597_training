@@ -3,9 +3,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants;
 
 public class Example extends SubsystemBase {
@@ -49,23 +49,52 @@ public class Example extends SubsystemBase {
     }
 
 
+    // /**
+    //  * Set the motor to a specific position using whileture
+    //  * 
+    //  * @return
+    //  */
+    // public Command motor_Move2position() {
+
+    //     return startEnd(
+    //             () ->{
+    //                 setMotorPosition(50);
+    //             },
+    //             () ->{
+    //                 setMotorPosition(0);
+    //             }
+
+    //     );
+
+    // }
+
+    public Command  motor_Move2position(double position) {
+        return run(() -> {
+            switch (position) {
+                case Constants.Motor.MotorPosition1:
+                    setMotorPosition(Constants.Motor.MotorPosition1);
+                    break;
+                case Constants.Motor.MotorPosition2:
+                    setMotorPosition(Constants.Motor.MotorPosition2);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid motor position: " + position);
+            }
+
+        }).until(()->{
+            return (Math.abs(getMotorPosition() - position) < Constants.Motor.Accepted_Error);
+        });
+    }
+
+
+
     /**
-     * Set the motor to a specific position.
+     * get the current position of the motor.
      * 
      * @return
      */
-    public Command motor_Move2position() {
-
-        return startEnd(
-                () ->{
-                    setMotorPosition(50);
-                },
-                () ->{
-                    setMotorPosition(0);
-                }
-
-        );
-
+    public double getMotorPosition() {
+        return m_test_motor.getPosition().getValueAsDouble();
     }
 
  
