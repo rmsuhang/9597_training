@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Motor;
 
@@ -35,7 +36,9 @@ public class RobotContainer {
 
     //电机到位100
     m_driverJoystick.rightBumper().onTrue(motor.Motor_Move_Position2());
-    
+
+    //释放电机
+    m_driverJoystick.start().onTrue(Commands.runOnce(()->motor.releaseMotor()));
   }
 
 

@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -20,11 +21,17 @@ public class Motor extends SubsystemBase {
   private final TalonFX m_test_motor = new TalonFX(1, "rio");
   private final MotionMagicVoltage m_test_motor_request = new MotionMagicVoltage(0.0).withSlot(0);
 
+  private final VoltageOut m_test_motor_voltage_request = new VoltageOut(0.0);
+
   private final CANcoder m_motor_encoder = new CANcoder(4, "rio");
 
   //setp2
   public void setmotorPosition(double position) {
     m_test_motor.setControl(m_test_motor_request.withPosition(position));
+  }
+
+  public void releaseMotor() {
+    m_test_motor.setControl(m_test_motor_voltage_request.withOutput(0.0));
   }
 
   //构造函数
@@ -57,7 +64,7 @@ public class Motor extends SubsystemBase {
       //set motor feedback using CANcoder data
       motorConfigs.Feedback.FeedbackRemoteSensorID = m_motor_encoder.getDeviceID();
       motorConfigs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.FusedCANcoder;
-      motorConfigs.Feedback.RotorToSensorRatio = 13; // 30:12
+      motorConfigs.Feedback.RotorToSensorRatio = 13;
 
       m_test_motor.getConfigurator().apply(motorConfigs);
 
@@ -69,6 +76,7 @@ public class Motor extends SubsystemBase {
       setmotorPosition(50); // Set the motor to move at 1000 units per second
     });
   }
+
 
   public Command Motor_Move_Position2(){
     return run(()->{
