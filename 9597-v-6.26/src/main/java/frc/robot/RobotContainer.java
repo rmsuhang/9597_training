@@ -3,11 +3,22 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Newton;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.CANdleConfigCommands;
+import frc.robot.commands.CANdlePrintCommands;
 import frc.robot.subsystems.CANdleSystem;
 import frc.robot.subsystems.Example1;
 /////////////////////////////
+import edu.wpi.first.wpilibj2.command.RunCommand;
 //import frc.robot.commands.AutoAlignToAprilTagCommand;
 
 //import frc.robot.Commands.Getballcommand;
@@ -43,14 +54,12 @@ public class RobotContainer {
 
         //m_driverJoystick.a().onTrue(Commands.runOnce(m_candleSubsystem::setOff, m_candleSubsystem));
         //m_driverJoystick.b().onTrue(Commands.runOnce(m_candleSubsystem::red, m_candleSubsystem));
-        //m_driverJoystick.b().onTrue(Commands.runOnce(m_candleSubsystem::red, m_candleSubsystem));
-        //m_driverJoystick.a().onTrue(Commands.runOnce(m_candleSubsystem::blue, m_candleSubsystem));
+        m_driverJoystick.b().onTrue(Commands.runOnce(m_candleSubsystem::red, m_candleSubsystem));
+        m_driverJoystick.a().onTrue(Commands.runOnce(m_candleSubsystem::blue, m_candleSubsystem));
         
         
-        m_driverJoystick.b().onTrue(motor.motorTurn1());
-        m_driverJoystick.a().onTrue(motor.motorTurn2());
-        
-        m_driverJoystick.x().onTrue(motor.motorvoltage());
+        m_driverJoystick.b().onTrue(motor.motormove1());
+        m_driverJoystick.a().onTrue(motor.motormove2());
     }
                                 
 }
